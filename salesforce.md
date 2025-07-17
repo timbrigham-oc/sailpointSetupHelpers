@@ -7,8 +7,8 @@ Setup -> App -> External Client Apps -> External Client App Manager
 Create an external client app, for example "Sailpoint Instance" 
 
 ## Policies -> App Authorization
-'Expire fresh token if not used for specific time' 
-Token Validity period at least 30 days 
+- Expire fresh token if not used for specific time 
+- Token Validity period at least 30 days 
 
 ### OAuth Settings
 - **Enable OAuth Settings**: Check the box to enable OAuth settings for the app.
@@ -17,24 +17,24 @@ Token Validity period at least 30 days
     - `Perform requests on your behalf at any time (refresh_token, offline_access)`
     - `Access and manage your data (api)`
     - `Full access (full)` should be unneeded
-- **Save** the configuration and note the **Consumer Key** and **Consumer Secret** for use in SailPoint.OAuth Settings
+- **Save** the configuration and note the **Consumer Key** and **Consumer Secret** for use in script below.
 
 # Creating the Refresh Token via Script
-The refresh token used is created using the code returned by the OAuth interface. 
-This is something like the following: 
+The refresh token used is created using the code returned by the OAuth interface when `response_type=code`. 
+This is something like the following. 
 
 ```
 https://login.salesforce.com/services/oauth2/authorize?response_type=code&client_id=YOUR_CONSUMER_KEY&redirect_uri=https://login.salesforce.com&prompt=consent
 ```
 
 Once the sign in and authorization is completed in the browser, a command needs to be run to transform the code returned into a refresh token. 
-The official documentation covers doing this in Postman, however I have wrapped this into a short script that outputs exactly what needs to be added to SailPoint. 
+The official documentation covers doing this in Postman, however I have wrapped this into a short script that outputs exactly what needs to be added to SailPoint, and takes care of any URL encoding issues.
 
 ```
 .\salesforce.ps1 -consumerKey xxxx -consumerSecret yyyyy -urlRoot "https://test.salesforce.com"
 ```
 
-This will build the exact URL that needs to be opened, open it in the default browser on your device, then wait for the URL (with the embedded code) to be pasted in to complete processsing. 
+This will build the exact URL that needs to be opened, open it in the default browser, then wait for the URL (with the embedded code) to be pasted in to complete processsing. 
 
 On completion, the second request modeled after the Postman call will be made to retrieve the refresh token. 
 
