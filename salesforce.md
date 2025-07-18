@@ -1,6 +1,11 @@
 # Salesforce Source Setup in SailPoint
-
 This document provides a summary for configuring a Salesforce source in SailPoint using a refresh token for authentication.
+
+# Prerequisites 
+The account used to approve the application here **must** remain active in Salesforce. 
+If it does not, a grant error such as `{"error":"invalid_grant","error_description":"inactive user"} ` will occur in the Sailpoint interface. 
+It comes highly suggested to have the integration run under a service account. 
+This can be dediated to interacting with Sailpoint, or for multiple third party 
 
 # Navagating the Salesforce Lightning UI
 Setup -> App -> External Client Apps -> External Client App Manager
