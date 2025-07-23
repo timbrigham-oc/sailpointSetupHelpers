@@ -6,7 +6,7 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$urlRoot
 )
-
+Add-Type -AssemblyName System.Web
 $oauthTokenUrl = "$urlRoot/services/oauth2/token"
 
 # First step, get the code. The code is used to generate a later token. This will open a browser window for the user to log in and authorize the app. 
